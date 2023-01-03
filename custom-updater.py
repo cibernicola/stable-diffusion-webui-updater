@@ -9,6 +9,7 @@ def is_outdated(extension):
             return True
         return False
 
+
 #heavyly based on original code from webUI
 def fetch_and_reset_hard(update_extension):
     repo = git.Repo(update_extension)
@@ -21,7 +22,7 @@ def fetch_and_reset_hard(update_extension):
 def ask():
     from inputimeout import inputimeout, TimeoutOccurred   
     try:
-        answer = inputimeout(prompt=str("\n Update WebUI extensions (Y/any key(No)): "), timeout=10)
+        answer = inputimeout(prompt=str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any key (No)): "), timeout=10)
         answer=str(answer).lower()
         if answer=="y" or answer=="":
             return True

@@ -4,13 +4,16 @@ Updates WebUI extensions
 Requirements:
   inputimeout==1.0.4
   
+Installation
+To install, simply go to the "Extensions" tab in the SD Web UI, select "Install from url:", paste "https://github.com/cibernicola/stable-diffusion-webui-updater", click "install".
 
-Clone or download this repo in "stable-diffusion-webui\extensions". Then In webui-user.bat set this line:
+Then In webui-user.bat set this line:
 
 python "YOUR PATH TO FILE\custom-updates.py"
 
 The update will be requested, with a timeout of 10 seconds, the default answer being NO. Y key or empty means Yes, any other means No:
 
-![image](https://user-images.githubusercontent.com/4579387/210354834-866da2aa-206d-4f7e-bb34-90348c95304d.png)
+![image](https://user-images.githubusercontent.com/4579387/210420553-b51de553-136e-4e10-9626-f77e1b31593f.png)
+
 
 Pre alpha.

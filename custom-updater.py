@@ -1,5 +1,6 @@
 import git
 
+#heavyly based on original code from webUI
 def is_outdated(extension):
     repo = git.Repo(extension)
     for fetch in repo.remote().fetch("--dry-run"):
@@ -8,7 +9,7 @@ def is_outdated(extension):
             return True
         return False
 
-
+#heavyly based on original code from webUI
 def fetch_and_reset_hard(update_extension):
     repo = git.Repo(update_extension)
     # Fix: `error: Your local changes to the following files would be overwritten by merge`,

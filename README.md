@@ -9,7 +9,7 @@ To install, simply go to the "Extensions" tab in the SD Web UI, select "Install 
 
 Then In webui-user.bat set this line:
 
-python "YOUR PATH TO FILE\custom-updates.py"
+python "YOUR PATH to \stable-diffusion-webui\extensions\stable-diffusion-webui-updater\custom-updates.py"
 
 The update will be requested, with a timeout of 10 seconds, the default answer being NO. Y key or empty means Yes, any other means No:
 

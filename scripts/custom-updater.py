@@ -3,22 +3,30 @@ import git
 
 #heavyly based on original code from webUI
 def is_outdated(extension):
-    repo = git.Repo(extension)
-    for fetch in repo.remote().fetch("--dry-run"):
-        if fetch.flags != fetch.HEAD_UPTODATE:
-            print("==>",extension.split("\\")[-1],"outdated")
-            return True
+    try:
+        repo = git.Repo(extension)
+        for fetch in repo.remote().fetch("--dry-run"):
+            if fetch.flags != fetch.HEAD_UPTODATE:
+                print("==>",extension.split("\\")[-1],"outdated")
+                return True
+            return False
+    except Exception as e:
+        print(f"===>Error checking {extension.split('\\')[-1]}. Please check it manually.<===")
         return False
 
 
 #heavyly based on original code from webUI
 def fetch_and_reset_hard(update_extension):
-    repo = git.Repo(update_extension)
-    # Fix: `error: Your local changes to the following files would be overwritten by merge`,
-    # because WSL2 Docker set 755 file permissions instead of 644, this results to the error.
-    repo.git.fetch('--all')
-    repo.git.reset('--hard', 'origin')
-    print("===>",update_extension.split("\\")[-1], "updated!")
+    try:
+        repo = git.Repo(update_extension)
+        # Fix: `error: Your local changes to the following files would be overwritten by merge`,
+        # because WSL2 Docker set 755 file permissions instead of 644, this results to the error.
+        repo.git.fetch('--all')
+        repo.git.reset('--hard', 'origin')
+        print("===>",update_extension.split("\\")[-1], "updated!")
+    except Exception as e:
+        print(f'===>Error updating {update_extension.split("\\")[-1]}. Please check it manually.<===')
+        return False
 
 def ask():
     from inputimeout import inputimeout, TimeoutOccurred   

@@ -37,7 +37,7 @@ def update_extensions():
     counter=1
     extensions_path= os.getcwd().replace("\stable-diffusion-webui-updater\scripts","")
     extensions_path= os.path.join(extensions_path,"extensions")
-    #extensions_path="L:\stable-diffusion-webui\extensions"
+
     extensions_list= os.listdir(extensions_path)
     extension_list=[]
     

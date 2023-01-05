@@ -14,9 +14,13 @@ python "YOUR PATH to \stable-diffusion-webui\extensions\stable-diffusion-webui-u
 
 The update will be requested, with a timeout of 10 seconds, the default answer being NO. Y key or empty (only Enter) means Yes, any other means No:
 
-![image](https://user-images.githubusercontent.com/4579387/210830869-92771abf-5d6d-4b4f-a303-193076957973.png)
+![image](https://user-images.githubusercontent.com/4579387/210862028-bd320321-93e7-4d13-9e39-740db9a6eca1.png)
+
+
+TO-DO: Auto insert in bat/sh files.
+
 
 
 $$
-Pre alpha.
+Pre alpha 1.
 $$

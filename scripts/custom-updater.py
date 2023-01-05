@@ -1,5 +1,6 @@
 import git
 
+
 #heavyly based on original code from webUI
 def is_outdated(extension,extension_name):
     try:
@@ -7,11 +8,14 @@ def is_outdated(extension,extension_name):
         for fetch in repo.remote().fetch("--dry-run"):
             if fetch.flags != fetch.HEAD_UPTODATE:
                 print(f"===> {extension_name},outdated!")
+                status['outdated']+=1
                 return True
             return False
     except Exception as e:
+        status['error_checking']+=1
+        status['error_updating']+=1
+        status['unknown_status']+=1
         print(f'===>Error checking {extension_name}. Please check it manually.<===\n', str(e))
-        
         return False
 
 
@@ -24,8 +28,10 @@ def fetch_and_reset_hard(update_extension,extension_name):
         repo.git.fetch('--all')
         repo.git.reset('--hard', 'origin')
         print(f"===> {extension_name},updated!")
+        status['updated']+=1
     except Exception as e:
         print(f'===>Error updating {extension_name}. Please check it manually.<===\n', str(e))
+        status['error_updating']+=1
         return False
 
 def ask():
@@ -54,19 +60,37 @@ def update_extensions():
         update_extension = os.path.join(extensions_path, extension)
         if os.path.isdir(update_extension):
             cleaned_extension_list.append(update_extension)
-            
+    status["total_extensions"] = len(cleaned_extension_list)-1
+    
     for extension in cleaned_extension_list :
         extension_name=update_extension.split("\\")[-1]
         update_extension = os.path.join(extensions_path, extension)
-        print(f"Checking {counter} of {len(cleaned_extension_list)-1}:", extension_name, )
+        print(f"Checking {counter} of {status['total_extensions']}:", extension_name, )
         if is_outdated(update_extension,extension_name):
             fetch_and_reset_hard(update_extension,extension_name)
         counter+=1
-
+    
 
 
 if __name__ == "__main__": 
+    
+    global status
+    status={
+    "updated":0,
+    "outdated":0,
+    "error_checking":0,
+    "error_updating":0,
+    "total_extensions":0,
+    "unknown_status":0
+    }
     if ask():
         update_extensions()
+        print(f"-==Update status==- \n -Extensions:{status['total_extensions']} \
+                                    \n -Outdated:{status['outdated']} \
+                                    \n -Updated:{status['updated']} \
+                                    \n -Errors checking:{status['error_checking']} \
+                                    \n -Errors updating:{status['error_updating']} \
+                                    \n -Unknown status:{status['unknown_status']} \
+                                    \n --------- \n ")
     else:
         quit()

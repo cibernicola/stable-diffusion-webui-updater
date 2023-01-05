@@ -1,11 +1,17 @@
 import git
+import sys
+import traceback
+import os
+import msvcrt
 
 
 #heavyly based on original code from webUI
 def is_outdated(extension,extension_name):
     try:
-        repo = git.Repo(extension)
-        for fetch in repo.remote().fetch("--dry-run"):
+        path=os.path.join(extension, ".git")
+        repo = git.Repo(path)
+       # print(extension,extension_name,path)
+        for fetch in repo.remote().fetch("--dry-run"): 
             if fetch.flags != fetch.HEAD_UPTODATE:
                 print(f"===> {extension_name},outdated!")
                 status['outdated']+=1
@@ -15,7 +21,14 @@ def is_outdated(extension,extension_name):
         status['error_checking']+=1
         status['error_updating']+=1
         status['unknown_status']+=1
-        print(f'===>Error checking {extension_name}. Please check it manually.<===\n', str(e))
+   
+        print(f"===> Error checking {extension_name} <===\
+            \n    Unable to read repository info from {path}. \
+            \n    Please check it manually.\
+            \n-----------------------------------------")
+        
+        print("\n")
+        #print(traceback.format_exc(), file=sys.stderr)
         return False
 
 
@@ -37,8 +50,7 @@ def fetch_and_reset_hard(update_extension,extension_name):
 def ask():
     from inputimeout import inputimeout, TimeoutOccurred  
     try:
-        answer = inputimeout(str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any key (No)): "), timeout=10)
-        answer=str(answer).lower()
+        answer = str(inputimeout(str("\n Update WebUI extensions. (y + Enter or Enter (Yes) / Any other key + Enter (No)): "), timeout=10)).lower()
         if answer=="y" or answer=="":
             return True
         else:
@@ -60,10 +72,10 @@ def update_extensions():
         update_extension = os.path.join(extensions_path, extension)
         if os.path.isdir(update_extension):
             cleaned_extension_list.append(update_extension)
-    status["total_extensions"] = len(cleaned_extension_list)-1
+    status["total_extensions"] = len(cleaned_extension_list)
     
     for extension in cleaned_extension_list :
-        extension_name=update_extension.split("\\")[-1]
+        extension_name=extension.split("\\")[-1]
         update_extension = os.path.join(extensions_path, extension)
         print(f"Checking {counter} of {status['total_extensions']}:", extension_name, )
         if is_outdated(update_extension,extension_name):
@@ -85,7 +97,7 @@ if __name__ == "__main__":
     }
     if ask():
         update_extensions()
-        print(f"-==Update status==- \n -Extensions:{status['total_extensions']} \
+        print(f"\n-==Update status==- \n -Extensions:{status['total_extensions']} \
                                     \n -Outdated:{status['outdated']} \
                                     \n -Updated:{status['updated']} \
                                     \n -Errors checking:{status['error_checking']} \

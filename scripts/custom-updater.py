@@ -1,7 +1,4 @@
 import git
-from colorama import Fore, Back, Style
-
-
 
 #heavyly based on original code from webUI
 def is_outdated(extension,extension_name):
@@ -9,11 +6,12 @@ def is_outdated(extension,extension_name):
         repo = git.Repo(extension)
         for fetch in repo.remote().fetch("--dry-run"):
             if fetch.flags != fetch.HEAD_UPTODATE:
-                print(Fore.YELLOW + f"===> {extension_name},outdated!🤨")
+                print(f"===> {extension_name},outdated!")
                 return True
             return False
     except Exception as e:
-        print(Fore.RED + f'===>Error checking {extension_name}. Please check it manually🙄.<===')
+        print(f'===>Error checking {extension_name}. Please check it manually.<===\n', str(e))
+        
         return False
 
 
@@ -25,15 +23,15 @@ def fetch_and_reset_hard(update_extension,extension_name):
         # because WSL2 Docker set 755 file permissions instead of 644, this results to the error.
         repo.git.fetch('--all')
         repo.git.reset('--hard', 'origin')
-        print(Fore.GREEN + f"===> {extension_name},updated!😎")
+        print(f"===> {extension_name},updated!")
     except Exception as e:
-        print(Fore.RED + f'===>Error updating {extension_name}. Please check it manually🙄.<===')
+        print(f'===>Error updating {extension_name}. Please check it manually.<===\n', str(e))
         return False
 
 def ask():
     from inputimeout import inputimeout, TimeoutOccurred  
     try:
-        answer = inputimeout(Fore.WHITE + str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any key (No)): "), timeout=10)
+        answer = inputimeout(str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any key (No)): "), timeout=10)
         answer=str(answer).lower()
         if answer=="y" or answer=="":
             return True
@@ -48,8 +46,7 @@ def update_extensions():
     counter=1
     extensions_path= os.getcwd().replace("\stable-diffusion-webui-updater\scripts","")
     extensions_path= os.path.join(extensions_path,"extensions")
-   
-    
+
     raw_extensions_list= os.listdir(extensions_path)
     cleaned_extension_list=[]
     

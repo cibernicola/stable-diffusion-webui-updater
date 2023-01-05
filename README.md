@@ -14,7 +14,8 @@ python "YOUR PATH to \stable-diffusion-webui\extensions\stable-diffusion-webui-u
 
 The update will be requested, with a timeout of 10 seconds, the default answer being NO. Y key or empty (only Enter) means Yes, any other means No:
 
-![image](https://user-images.githubusercontent.com/4579387/210420553-b51de553-136e-4e10-9626-f77e1b31593f.png)
+![image](https://user-images.githubusercontent.com/4579387/210830869-92771abf-5d6d-4b4f-a303-193076957973.png)
+
 
 $$
 Pre alpha.

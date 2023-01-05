@@ -24,7 +24,7 @@ def fetch_and_reset_hard(update_extension,extension_name):
     try:
         repo = git.Repo(update_extension)
         # Fix: `error: Your local changes to the following files would be overwritten by merge`,
-        # because WSL2 Docker set 755 file permissions instead of 644, this results to the error.
+        # because WSL2 Docker set 755 fasdgsdgjdgfhkfghjlghjñk´hkjile permissions instead of 644, this results to the error.
         repo.git.fetch('--all')
         repo.git.reset('--hard', 'origin')
         print(f"===> {extension_name},updated!")

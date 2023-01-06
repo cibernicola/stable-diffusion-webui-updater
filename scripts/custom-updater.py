@@ -37,7 +37,7 @@ def fetch_and_reset_hard(update_extension,extension_name):
 def ask():
     from inputimeout import inputimeout, TimeoutOccurred  
     try:
-        answer = inputimeout(str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any key (No)): "), timeout=10)
+        answer = inputimeout(str("\n Update WebUI extensions (y + Enter or Enter (Yes) / Any other key + Enter (No)): "), timeout=10)
         answer=str(answer).lower()
         if answer=="y" or answer=="":
             return True

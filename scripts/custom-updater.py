@@ -1,8 +1,6 @@
 import git
-import sys
-import traceback
 import os
-import msvcrt
+
 
 
 #heavyly based on original code from webUI
@@ -27,7 +25,7 @@ def is_outdated(extension,extension_name):
             \n-----------------------------------------")
         
         print("\n")
-        #print(traceback.format_exc(), file=sys.stderr)
+
         return False
 
 
@@ -104,4 +102,4 @@ if __name__ == "__main__":
                                     \n -Unknown status:{status['unknown_status']} \
                                     \n --------- \n ")
     else:
-        quit()
+         print("\n Cancelling extensions update, WebUI loading continues...\n")

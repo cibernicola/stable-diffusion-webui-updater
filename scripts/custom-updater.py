@@ -100,4 +100,4 @@ if __name__ == "__main__":
                                     \n -Unknown status:{status['unknown_status']} \
                                     \n --------- \n ")
     else:
-         print("\n Cancelling extensions update, WebUI loading continues...\n")
+        print("\n Cancelling extensions update, WebUI loading continues...\n")

@@ -10,7 +10,6 @@ def is_outdated(extension,extension_name):
     try:
         path=os.path.join(extension, ".git")
         repo = git.Repo(path)
-       # print(extension,extension_name,path)
         for fetch in repo.remote().fetch("--dry-run"): 
             if fetch.flags != fetch.HEAD_UPTODATE:
                 print(f"===> {extension_name},outdated!")

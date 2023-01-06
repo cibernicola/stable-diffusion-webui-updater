@@ -1,8 +1,6 @@
 import git
 import os
 
-
-
 #heavyly based on original code from webUI
 def is_outdated(extension,extension_name):
     try:

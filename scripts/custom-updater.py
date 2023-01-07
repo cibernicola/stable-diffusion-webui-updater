@@ -1,5 +1,7 @@
 import git
 import os
+import gradio as gr
+from modules import shared, script_callbacks, sd_hijack, sd_samplers, sd_models, paths
 
 #heavyly based on original code from webUI
 def is_outdated(extension,extension_name):
@@ -16,7 +18,7 @@ def is_outdated(extension,extension_name):
         status['error_checking']+=1
         status['error_updating']+=1
         status['unknown_status']+=1
-   
+
         print(f"===> Error checking {extension_name} <===\
             \n    Unable to read repository info from {path}. \
             \n    Please check it manually.\
@@ -56,6 +58,15 @@ def ask():
 
 def update_extensions():
     import os
+    global status
+    status={
+            "updated":0,
+            "outdated":0,
+            "error_checking":0,
+            "error_updating":0,
+            "total_extensions":0,
+            "unknown_status":0
+            }
     counter=1
     extensions_path= os.getcwd().replace("\stable-diffusion-webui-updater\scripts","")
     extensions_path= os.path.join(extensions_path,"extensions")
@@ -76,28 +87,16 @@ def update_extensions():
         if is_outdated(update_extension,extension_name):
             fetch_and_reset_hard(update_extension,extension_name)
         counter+=1
+    return status
     
-
-
-if __name__ == "__main__": 
-    
-    global status
-    status={
-    "updated":0,
-    "outdated":0,
-    "error_checking":0,
-    "error_updating":0,
-    "total_extensions":0,
-    "unknown_status":0
-    }
-    if ask():
-        update_extensions()
-        print(f"\n-==Update status==- \n -Extensions:{status['total_extensions']} \
-                                    \n -Outdated:{status['outdated']} \
-                                    \n -Updated:{status['updated']} \
-                                    \n -Errors checking:{status['error_checking']} \
-                                    \n -Errors updating:{status['error_updating']} \
-                                    \n -Unknown status:{status['unknown_status']} \
-                                    \n --------- \n ")
-    else:
-        print("\n Cancelling extensions update, WebUI loading continues...\n")
+if ask():
+    update_extensions()
+    print(f"\n-==Update status==- \n -Extensions:{status['total_extensions']} \
+                                \n -Outdated:{status['outdated']} \
+                                \n -Updated:{status['updated']} \
+                                \n -Errors checking:{status['error_checking']} \
+                                \n -Errors updating:{status['error_updating']} \
+                                \n -Unknown status:{status['unknown_status']} \
+                                \n --------- \n ")
+else:
+    print("\n Cancelling extensions update, WebUI loading continues...\n")
